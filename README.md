@@ -1,18 +1,16 @@
-# School Bud-E 🎓🤖
+# Bud-E 🤖
 
-![School Bud-E Banner](banner.png)
-
-Welcome to School Bud-E, your AI-powered educational assistant! 🚀
+Welcome to Bud-E, your AI-powered assistant! 🚀
 
 [![Join us on Discord](https://img.shields.io/discord/823813159592001537?color=5865F2&logo=discord&logoColor=white)](https://discord.gg/xBPBXfcFHd)
 
 ## 🌟 Overview
 
-School Bud-E is an intelligent and empathetic learning assistant designed to revolutionize the educational experience. Developed by [LAION](https://laion.ai) in collaboration with the ELLIS Institute Tübingen, Collabora, the Tübingen AI Center and the German Research Center for Artificial Intelligence (DFKI), and Intel, School Bud-E focuses on empathy, natural interaction, and personalized learning. A working demo of the application is available at [school.bud-e.ai](https://school.bud-e.ai).
+Bud-E is an intelligent and empathetic AI assistant designed to revolutionize human-AI interaction. Developed by [LAION](https://laion.ai) in collaboration with the ELLIS Institute Tübingen, Collabora, the Tübingen AI Center and the German Research Center for Artificial Intelligence (DFKI), and Intel, Bud-E focuses on empathy, natural interaction, and personalized assistance. A working demo of the application is available at [bud-e.ai](https://bud-e.ai).
 
 ## 🚀 Features (WIP)
 
-- 💬 Real-time responses to student queries
+- 💬 Real-time responses to user queries
 - 🧠 Emotionally intelligent interactions
 - 🔄 Continuous conversation context
 - 👥 Multi-speaker and multi-language support
@@ -41,7 +39,7 @@ School Bud-E is an intelligent and empathetic learning assistant designed to rev
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/LAION-AI/school-bud-e-frontend.git
+   git clone https://github.com/LAION-AI/bud-e.git
    ```
 
 2. Set up environment variables:
@@ -51,7 +49,7 @@ School Bud-E is an intelligent and empathetic learning assistant designed to rev
 3. Run the development server:
 
    ```bash
-   cd school-bud-e-frontend
+   cd bud-e
    deno task start
    ```
 
@@ -69,8 +67,8 @@ School Bud-E is an intelligent and empathetic learning assistant designed to rev
 2. With docker
 
    ```bash
-   git clone https://github.com/LAION-AI/school-bud-e-frontend.git
-   cd school-bud-e-frontend
+   git clone https://github.com/LAION-AI/bud-e.git
+   cd bud-e
    cd docker-compose
    nano .env # Adjust environment variables accordingly
    docker-compose up
@@ -133,7 +131,7 @@ For more details, refer to the following files:
 
 ## 🤝 Contributing
 
-We welcome contributions to School Bud-E! Please join our [Discord server](https://discord.com/invite/eq3cAMZtCC) or contact us at <contact@laion.ai> to get involved.
+We welcome contributions to Bud-E! Please join our [Discord server](https://discord.com/invite/eq3cAMZtCC) or contact us at <contact@laion.ai> to get involved.
 
 ## 🚧 Experimental Demo Version
 
@@ -149,4 +147,4 @@ Special thanks to LAION, ELLIS Institute Tübingen, Collabora, the Tübingen AI 
 
 ---
 
-Built with ❤️ for the future of education.
+Built with ❤️ for the future of human-AI interaction.
