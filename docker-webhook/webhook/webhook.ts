@@ -58,7 +58,7 @@ async function handleWebhook(req: Request) {
       
       try {
         const rebuild = new Deno.Command('/usr/local/bin/docker', {
-          args: ['restart', 'school-bud-e-frontend'],
+          args: ['restart', 'bud-e'],
           cwd: '/app',
           stdout: "piped",
           stderr: "piped",

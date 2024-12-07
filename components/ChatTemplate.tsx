@@ -163,7 +163,7 @@ function ChatTemplate(
                 item.role === "user" ? "text-blue-600" : "text-gray-600"
               }`}
             >
-              {item.role === "user" ? "Du" : "School Bud-E"}
+              {item.role === "user" ? "Du" : "Bud-E"}
               {item.role !== "user" && groupIndex !== 0 && (
                 <button onClick={() => onRefreshAction(groupIndex)}>
                   <svg
