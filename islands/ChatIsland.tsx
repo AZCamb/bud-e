@@ -59,6 +59,7 @@ export default function ChatIsland({ lang }: { lang: string }) {
   const [images, setImages] = useState([] as Image[]);
   const [isStreamComplete, setIsStreamComplete] = useState(true);
   const [stopList, setStopList] = useState([] as number[]);
+  const [currentEditIndex, setCurrentEditIndex] = useState(-1 as number|undefined);
 
   const [messages, setMessages] = useState([
     {
@@ -312,16 +313,28 @@ export default function ChatIsland({ lang }: { lang: string }) {
 
   // 2. handleEditAction
   const handleEditAction = (groupIndex: number) => {
-    const lastMessage = Array.isArray(messages[groupIndex])
-      ? messages[groupIndex][0]
-      : messages[groupIndex];
+    const message = messages[groupIndex];
+    let contentToEdit = "";
 
-    setMessages((prevMessages) => {
-      const updatedMessages = prevMessages.slice(0, groupIndex);
-      return updatedMessages;
-    });
-    setQuery(lastMessage);
+    if (typeof message.content === "string") {
+      contentToEdit = message.content;
+    } else if (Array.isArray(message.content)) {
+      if (typeof message.content[0] === "string") {
+        contentToEdit = message.content.join("");
+      } else {
+        // Handle content array of objects with text and image_url
+        contentToEdit = message.content
+          .filter(item => item.type === "text")
+          .map(item => item.text)
+          .join("");
+      }
+    }
+
+    // setMessages((prevMessages) => prevMessages.slice(0, groupIndex));
+    setQuery(contentToEdit);
     setStopList([]);
+    setCurrentEditIndex(groupIndex);
+
     const textarea = document.querySelector("textarea");
     textarea!.focus();
   };
