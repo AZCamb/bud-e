@@ -1292,6 +1292,7 @@ export default function ChatIsland({ lang }: { lang: string }) {
         readAlways={readAlways}
         autoScroll={autoScroll}
         audioFileDict={audioFileDict}
+        currentEditIndex={currentEditIndex}
         onSpeakAtGroupIndexAction={handleOnSpeakAtGroupIndexAction}
         onToggleReadAlwaysAction={() => toggleReadAlways(!readAlways)}
         onToggleAutoScrollAction={() => toggleAutoScroll(!autoScroll)}

@@ -95,6 +95,7 @@ function ChatTemplate(
     messages,
     readAlways,
     autoScroll,
+    currentEditIndex,
     audioFileDict,
     onRefreshAction,
     onEditAction,
@@ -109,6 +110,7 @@ function ChatTemplate(
     isComplete: boolean;
     readAlways: boolean;
     autoScroll: boolean;
+    currentEditIndex: number;
     audioFileDict: AudioFileDict;
     onToggleAutoScrollAction: () => void;
     onToggleReadAlwaysAction: () => void;
@@ -179,7 +181,7 @@ function ChatTemplate(
                 <button onClick={() => onEditAction(groupIndex)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    style="margin-left: 0.5rem; width: 24px; height: 24px;"
+                    style={`margin-left: 0.5rem; width: 24px; height: 24px; ${currentEditIndex === groupIndex ? "fill: red;" : "fill: grey;"}`}
                     viewBox="0 -960 960 960"
                     fill="grey"
                   >
