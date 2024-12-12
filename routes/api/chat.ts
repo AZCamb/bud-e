@@ -23,7 +23,7 @@ interface Message {
   content: string;
 }
 
-async function getModelResponseStream(messages: Message[], lang: string) {
+async function getModelResponseStream(messages: Message[], lang: string, llmApiUrl: string, llmApiKey: string, llmApiModel: string) {
   let isLastMessageAssistant =
     messages[messages.length - 1].role === "assistant";
   while (isLastMessageAssistant) {
@@ -58,9 +58,9 @@ async function getModelResponseStream(messages: Message[], lang: string) {
     return false;
   });
 
-  let api_url = API_URL;
-  let api_key = API_KEY;
-  let api_model = API_MODEL;
+  let api_url = llmApiUrl != '' ? llmApiUrl : API_URL;
+  let api_key = llmApiKey != '' ? llmApiKey : API_KEY;
+  let api_model = llmApiModel != '' ? llmApiModel : API_MODEL;
 
   if (isImageInMessages) {
     api_url = API_IMAGE_URL;
@@ -215,6 +215,6 @@ export const handler: Handlers = {
 
     // console.log("Model used: ", API_MODEL);
     // console.log("payload messages", payload.messages);
-    return getModelResponseStream(payload.messages, payload.lang);
+    return getModelResponseStream(payload.messages, payload.lang, payload.llmApiUrl, payload.llmApiKey, payload.llmApiModel);
   },
 };

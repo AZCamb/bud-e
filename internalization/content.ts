@@ -86,10 +86,14 @@ export const chatTemplateContent: InternalizationContent = {
   "en": {
     readOutText: "Read out text",
     silent: "Silent",
+    autoScrollOn: "Auto scroll",
+    autoScrollOff: "Manual scroll",
   },
   "de": {
     readOutText: "Text vorlesen",
     silent: "Stumm",
+    autoScrollOn: "Automatisch scrollen",
+    autoScrollOff: "Manuelles scrollen",
   },
 };
 
@@ -171,4 +175,29 @@ export const aboutContent: InternalizationContent = {
       "Sind Sie interessiert, am Bud-E Projekt mitzuarbeiten oder es in Ihre Suite von Bildungstechnologien zu integrieren? Dann treten Sie unserem",
     partFourThree: "bei oder kontaktieren Sie uns direkt unter",
   },
+};
+
+export const settingsContent: InternalizationContent = {
+  en: {
+    title: "Settings",
+    apiUrlLabel: "LLM API URL (url containing /v1/chat/completions)",
+    apiUrlPlaceholder: "Enter API URL",
+    apiKeyLabel: "LLM API Key",
+    apiKeyPlaceholder: "Enter API Key",
+    modelLabel: "LLM Model",
+    modelPlaceholder: "Enter Model Name",
+    cancel: "Cancel",
+    save: "Save"
+  },
+  de: {
+    title: "Einstellungen",
+    apiUrlLabel: "LLM API URL (URL mit /v1/chat/completions)",
+    apiUrlPlaceholder: "API URL eingeben",
+    apiKeyLabel: "LLM API Schlüssel",
+    apiKeyPlaceholder: "API Schlüssel eingeben",
+    modelLabel: "LLM Modell",
+    modelPlaceholder: "Modellname eingeben",
+    cancel: "Abbrechen",
+    save: "Speichern"
+  }
 };
