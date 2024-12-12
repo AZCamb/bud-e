@@ -82,6 +82,10 @@ export default function ChatIsland({ lang }: { lang: string }) {
 
   const [systemPrompt, setSystemPrompt] = useState(localStorage.getItem("bud-e-system-prompt") || "");
 
+  const [sttUrl, setSttUrl] = useState(localStorage.getItem("bud-e-stt-url") || "");
+  const [sttKey, setSttKey] = useState(localStorage.getItem("bud-e-stt-key") || "");
+  const [sttModel, setSttModel] = useState(localStorage.getItem("bud-e-stt-model") || "");
+
   // Add useEffect for loading settings
   useEffect(() => {
     const savedApiUrl = localStorage.getItem("bud-e-api-url");
@@ -90,30 +94,55 @@ export default function ChatIsland({ lang }: { lang: string }) {
     const savedTtsUrl = localStorage.getItem("bud-e-tts-url");
     const savedTtsKey = localStorage.getItem("bud-e-tts-key");
     const savedTtsModel = localStorage.getItem("bud-e-tts-model");
+    const savedSttUrl = localStorage.getItem("bud-e-stt-url");
+    const savedSttKey = localStorage.getItem("bud-e-stt-key");
+    const savedSttModel = localStorage.getItem("bud-e-stt-model");
     const savedSystemPrompt = localStorage.getItem("bud-e-system-prompt");
+    
     if (savedApiUrl) setApiUrl(savedApiUrl);
     if (savedApiKey) setApiKey(savedApiKey);
     if (savedModel) setApiModel(savedModel);
     if (savedTtsUrl) setTtsUrl(savedTtsUrl);
     if (savedTtsKey) setTtsKey(savedTtsKey);
     if (savedTtsModel) setTtsModel(savedTtsModel);
+    if (savedSttUrl) setSttUrl(savedSttUrl);
+    if (savedSttKey) setSttKey(savedSttKey);
+    if (savedSttModel) setSttModel(savedSttModel);
     if (savedSystemPrompt) setSystemPrompt(savedSystemPrompt);
   }, []);
 
-  const handleSaveSettings = (newApiUrl: string, newApiKey: string, newModel: string, newTtsUrl: string, newTtsKey: string, newTtsModel: string, newSystemPrompt: string) => {
+  const handleSaveSettings = (
+    newApiUrl: string, 
+    newApiKey: string, 
+    newModel: string, 
+    newTtsUrl: string, 
+    newTtsKey: string, 
+    newTtsModel: string,
+    newSttUrl: string,
+    newSttKey: string,
+    newSttModel: string,
+    newSystemPrompt: string
+  ) => {
     setApiUrl(newApiUrl);
     setApiKey(newApiKey);
     setApiModel(newModel);
     setTtsUrl(newTtsUrl);
     setTtsKey(newTtsKey);
     setTtsModel(newTtsModel);
+    setSttUrl(newSttUrl);
+    setSttKey(newSttKey);
+    setSttModel(newSttModel);
     setSystemPrompt(newSystemPrompt);
+    
     localStorage.setItem("bud-e-api-url", newApiUrl);
     localStorage.setItem("bud-e-api-key", newApiKey);
     localStorage.setItem("bud-e-model", newModel);
     localStorage.setItem("bud-e-tts-url", newTtsUrl);
     localStorage.setItem("bud-e-tts-key", newTtsKey);
     localStorage.setItem("bud-e-tts-model", newTtsModel);
+    localStorage.setItem("bud-e-stt-url", newSttUrl);
+    localStorage.setItem("bud-e-stt-key", newSttKey);
+    localStorage.setItem("bud-e-stt-model", newSttModel);
     localStorage.setItem("bud-e-system-prompt", newSystemPrompt);
     setShowSettings(false);
   };
@@ -1338,6 +1367,9 @@ export default function ChatIsland({ lang }: { lang: string }) {
           ttsUrl={ttsUrl}
           ttsKey={ttsKey}
           ttsModel={ttsModel}
+          sttUrl={sttUrl}
+          sttKey={sttKey}
+          sttModel={sttModel}
           systemPrompt={systemPrompt}
           onSave={handleSaveSettings}
           onClose={() => setShowSettings(false)}
@@ -1371,6 +1403,9 @@ export default function ChatIsland({ lang }: { lang: string }) {
 
         <VoiceRecordButton
           resetTranscript={resetTranscript}
+          sttUrl={sttUrl}
+          sttKey={sttKey}
+          sttModel={sttModel}
           onFinishRecording={(finalTranscript) => {
             startStream(finalTranscript);
           }}

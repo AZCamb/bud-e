@@ -8,6 +8,9 @@ export default function Settings({
   ttsUrl,
   ttsKey,
   ttsModel,
+  sttUrl,        // new
+  sttKey,        // new
+  sttModel,      // new
   systemPrompt,
   onSave, 
   onClose,
@@ -19,8 +22,11 @@ export default function Settings({
   ttsUrl: string;
   ttsKey: string;
   ttsModel: string;
+  sttUrl: string;    // new
+  sttKey: string;    // new
+  sttModel: string;  // new
   systemPrompt: string;
-  onSave: (apiUrl: string, apiKey: string, apiModel: string, ttsUrl: string, ttsKey: string, ttsModel: string, systemPrompt: string) => void;
+  onSave: (apiUrl: string, apiKey: string, apiModel: string, ttsUrl: string, ttsKey: string, ttsModel: string, sttUrl: string, sttKey: string, sttModel: string, systemPrompt: string) => void;
   onClose: () => void;
   lang?: string;
 }) {
@@ -30,6 +36,9 @@ export default function Settings({
   const [newTtsUrl, setNewTtsUrl] = useState(ttsUrl);
   const [newTtsKey, setNewTtsKey] = useState(ttsKey);
   const [newTtsModel, setNewTtsModel] = useState(ttsModel);
+  const [newSttUrl, setNewSttUrl] = useState(sttUrl);       // new
+  const [newSttKey, setNewSttKey] = useState(sttKey);       // new
+  const [newSttModel, setNewSttModel] = useState(sttModel); // new
   const [newSystemPrompt, setNewSystemPrompt] = useState(systemPrompt || chatContent[lang].systemPrompt);
 
   return (
@@ -117,6 +126,45 @@ export default function Settings({
 
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-2">
+            {settingsContent[lang].sttUrlLabel}
+          </label>
+          <input
+            type="text"
+            value={newSttUrl}
+            onChange={(e) => setNewSttUrl((e.target as HTMLInputElement).value)}
+            class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+            placeholder={settingsContent[lang].sttUrlPlaceholder}
+          />
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {settingsContent[lang].sttKeyLabel}
+          </label>
+          <input
+            type="password"
+            value={newSttKey}
+            onChange={(e) => setNewSttKey((e.target as HTMLInputElement).value)}
+            class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+            placeholder={settingsContent[lang].sttKeyPlaceholder}
+          />
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {settingsContent[lang].sttModelLabel}
+          </label>
+          <input
+            type="text"
+            value={newSttModel}
+            onChange={(e) => setNewSttModel((e.target as HTMLInputElement).value)}
+            class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+            placeholder={settingsContent[lang].sttModelPlaceholder}
+          />
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
             {settingsContent[lang].systemPromptLabel}
           </label>
           <textarea
@@ -134,7 +182,7 @@ export default function Settings({
             {settingsContent[lang].cancel}
           </button>
           <button
-            onClick={() => onSave(newApiUrl, newApiKey, newModel, newTtsUrl, newTtsKey, newTtsModel, newSystemPrompt)}
+            onClick={() => onSave(newApiUrl, newApiKey, newModel, newTtsUrl, newTtsKey, newTtsModel, newSttUrl, newSttKey, newSttModel, newSystemPrompt)}
             class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             {settingsContent[lang].save}
