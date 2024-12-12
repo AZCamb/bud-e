@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import { settingsContent } from "../internalization/content.ts";
+import { settingsContent, chatContent } from "../internalization/content.ts";
 
 export default function Settings({ 
   apiUrl, 
@@ -8,6 +8,7 @@ export default function Settings({
   ttsUrl,
   ttsKey,
   ttsModel,
+  systemPrompt,
   onSave, 
   onClose,
   lang = 'en'
@@ -18,7 +19,8 @@ export default function Settings({
   ttsUrl: string;
   ttsKey: string;
   ttsModel: string;
-  onSave: (apiUrl: string, apiKey: string, apiModel: string, ttsUrl: string, ttsKey: string, ttsModel: string) => void;
+  systemPrompt: string;
+  onSave: (apiUrl: string, apiKey: string, apiModel: string, ttsUrl: string, ttsKey: string, ttsModel: string, systemPrompt: string) => void;
   onClose: () => void;
   lang?: string;
 }) {
@@ -28,6 +30,7 @@ export default function Settings({
   const [newTtsUrl, setNewTtsUrl] = useState(ttsUrl);
   const [newTtsKey, setNewTtsKey] = useState(ttsKey);
   const [newTtsModel, setNewTtsModel] = useState(ttsModel);
+  const [newSystemPrompt, setNewSystemPrompt] = useState(systemPrompt || chatContent[lang].systemPrompt);
 
   return (
     <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -112,6 +115,17 @@ export default function Settings({
           />
         </div>
 
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {settingsContent[lang].systemPromptLabel}
+          </label>
+          <textarea
+            value={newSystemPrompt}
+            onChange={(e) => setNewSystemPrompt((e.target as HTMLTextAreaElement).value)}
+            class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 h-32"
+          />
+        </div>
+
         <div class="flex justify-end space-x-4">
           <button
             onClick={onClose}
@@ -120,7 +134,7 @@ export default function Settings({
             {settingsContent[lang].cancel}
           </button>
           <button
-            onClick={() => onSave(newApiUrl, newApiKey, newModel, newTtsUrl, newTtsKey, newTtsModel)}
+            onClick={() => onSave(newApiUrl, newApiKey, newModel, newTtsUrl, newTtsKey, newTtsModel, newSystemPrompt)}
             class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             {settingsContent[lang].save}

@@ -23,7 +23,7 @@ interface Message {
   content: string;
 }
 
-async function getModelResponseStream(messages: Message[], lang: string, llmApiUrl: string, llmApiKey: string, llmApiModel: string) {
+async function getModelResponseStream(messages: Message[], lang: string, llmApiUrl: string, llmApiKey: string, llmApiModel: string, systemPrompt: string) {
   let isLastMessageAssistant =
     messages[messages.length - 1].role === "assistant";
   while (isLastMessageAssistant) {
@@ -36,11 +36,17 @@ async function getModelResponseStream(messages: Message[], lang: string, llmApiU
 
   console.log("isCorrectionInLastMessage", isCorrectionInLastMessage);
 
-  const systemPrompt = isCorrectionInLastMessage ? chatContent[lang].correctionSystemPrompt : chatContent[lang].systemPrompt;
+  let useThisSystemPrompt = isCorrectionInLastMessage ? chatContent[lang].correctionSystemPrompt : chatContent[lang].systemPrompt;
+
+  if (systemPrompt != "") {
+    useThisSystemPrompt = systemPrompt;
+  }
+
+  console.log(useThisSystemPrompt);
 
   messages.unshift({
     role: "system",
-    content: systemPrompt,
+    content: useThisSystemPrompt,
   });
 
   // looks for messages with array content that contains objects with a 'type' property set to 'image_url'
@@ -215,6 +221,6 @@ export const handler: Handlers = {
 
     // console.log("Model used: ", API_MODEL);
     // console.log("payload messages", payload.messages);
-    return getModelResponseStream(payload.messages, payload.lang, payload.llmApiUrl, payload.llmApiKey, payload.llmApiModel);
+    return getModelResponseStream(payload.messages, payload.lang, payload.llmApiUrl, payload.llmApiKey, payload.llmApiModel, payload.systemPrompt);
   },
 };

@@ -80,6 +80,8 @@ export default function ChatIsland({ lang }: { lang: string }) {
   const [ttsKey, setTtsKey] = useState(localStorage.getItem("bud-e-tts-key") || "");
   const [ttsModel, setTtsModel] = useState(localStorage.getItem("bud-e-tts-model") || "");
 
+  const [systemPrompt, setSystemPrompt] = useState(localStorage.getItem("bud-e-system-prompt") || "");
+
   // Add useEffect for loading settings
   useEffect(() => {
     const savedApiUrl = localStorage.getItem("bud-e-api-url");
@@ -88,27 +90,31 @@ export default function ChatIsland({ lang }: { lang: string }) {
     const savedTtsUrl = localStorage.getItem("bud-e-tts-url");
     const savedTtsKey = localStorage.getItem("bud-e-tts-key");
     const savedTtsModel = localStorage.getItem("bud-e-tts-model");
+    const savedSystemPrompt = localStorage.getItem("bud-e-system-prompt");
     if (savedApiUrl) setApiUrl(savedApiUrl);
     if (savedApiKey) setApiKey(savedApiKey);
     if (savedModel) setApiModel(savedModel);
     if (savedTtsUrl) setTtsUrl(savedTtsUrl);
     if (savedTtsKey) setTtsKey(savedTtsKey);
     if (savedTtsModel) setTtsModel(savedTtsModel);
+    if (savedSystemPrompt) setSystemPrompt(savedSystemPrompt);
   }, []);
 
-  const handleSaveSettings = (newApiUrl: string, newApiKey: string, newModel: string, newTtsUrl: string, newTtsKey: string, newTtsModel: string) => {
+  const handleSaveSettings = (newApiUrl: string, newApiKey: string, newModel: string, newTtsUrl: string, newTtsKey: string, newTtsModel: string, newSystemPrompt: string) => {
     setApiUrl(newApiUrl);
     setApiKey(newApiKey);
     setApiModel(newModel);
     setTtsUrl(newTtsUrl);
     setTtsKey(newTtsKey);
     setTtsModel(newTtsModel);
+    setSystemPrompt(newSystemPrompt);
     localStorage.setItem("bud-e-api-url", newApiUrl);
     localStorage.setItem("bud-e-api-key", newApiKey);
     localStorage.setItem("bud-e-model", newModel);
     localStorage.setItem("bud-e-tts-url", newTtsUrl);
     localStorage.setItem("bud-e-tts-key", newTtsKey);
     localStorage.setItem("bud-e-tts-model", newTtsModel);
+    localStorage.setItem("bud-e-system-prompt", newSystemPrompt);
     setShowSettings(false);
   };
 
@@ -789,6 +795,7 @@ export default function ChatIsland({ lang }: { lang: string }) {
           llmApiUrl: apiUrl,
           llmApiKey: apiKey,
           llmApiModel: apiModel,
+          systemPrompt: systemPrompt
         }),
         onmessage(ev: EventSourceMessage) {
           const parsedData = JSON.parse(ev.data);
@@ -1331,6 +1338,7 @@ export default function ChatIsland({ lang }: { lang: string }) {
           ttsUrl={ttsUrl}
           ttsKey={ttsKey}
           ttsModel={ttsModel}
+          systemPrompt={systemPrompt}
           onSave={handleSaveSettings}
           onClose={() => setShowSettings(false)}
           lang={lang}

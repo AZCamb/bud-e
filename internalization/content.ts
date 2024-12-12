@@ -193,7 +193,8 @@ export const settingsContent: InternalizationContent = {
     ttsModelLabel: "TTS Model",
     ttsModelPlaceholder: "Enter TTS Model Name",
     cancel: "Cancel",
-    save: "Save"
+    save: "Save",
+    systemPromptLabel: "System Prompt",
   },
   de: {
     title: "Einstellungen",
@@ -210,6 +211,7 @@ export const settingsContent: InternalizationContent = {
     ttsModelLabel: "TTS Modell",
     ttsModelPlaceholder: "TTS Modellname eingeben",
     cancel: "Abbrechen",
-    save: "Speichern"
+    save: "Speichern",
+    systemPromptLabel: "System Prompt"
   }
 };
