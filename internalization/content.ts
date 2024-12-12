@@ -186,6 +186,12 @@ export const settingsContent: InternalizationContent = {
     apiKeyPlaceholder: "Enter API Key",
     modelLabel: "LLM Model",
     modelPlaceholder: "Enter Model Name",
+    ttsUrlLabel: "TTS API URL",
+    ttsUrlPlaceholder: "Enter TTS API URL",
+    ttsKeyLabel: "TTS API Key",
+    ttsKeyPlaceholder: "Enter TTS API Key",
+    ttsModelLabel: "TTS Model",
+    ttsModelPlaceholder: "Enter TTS Model Name",
     cancel: "Cancel",
     save: "Save"
   },
@@ -197,6 +203,12 @@ export const settingsContent: InternalizationContent = {
     apiKeyPlaceholder: "API Schlüssel eingeben",
     modelLabel: "LLM Modell",
     modelPlaceholder: "Modellname eingeben",
+    ttsUrlLabel: "TTS API URL",
+    ttsUrlPlaceholder: "TTS API URL eingeben",
+    ttsKeyLabel: "TTS API Schlüssel",
+    ttsKeyPlaceholder: "TTS API Schlüssel eingeben",
+    ttsModelLabel: "TTS Modell",
+    ttsModelPlaceholder: "TTS Modellname eingeben",
     cancel: "Abbrechen",
     save: "Speichern"
   }

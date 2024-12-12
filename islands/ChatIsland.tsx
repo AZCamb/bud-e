@@ -71,27 +71,44 @@ export default function ChatIsland({ lang }: { lang: string }) {
   ] as Message[]);
 
   const [showSettings, setShowSettings] = useState(false);
+  
   const [apiUrl, setApiUrl] = useState(localStorage.getItem("bud-e-api-url") || "");
   const [apiKey, setApiKey] = useState(localStorage.getItem("bud-e-api-key") || "");
   const [apiModel, setApiModel] = useState(localStorage.getItem("bud-e-model") || "");
+
+  const [ttsUrl, setTtsUrl] = useState(localStorage.getItem("bud-e-tts-url") || "");
+  const [ttsKey, setTtsKey] = useState(localStorage.getItem("bud-e-tts-key") || "");
+  const [ttsModel, setTtsModel] = useState(localStorage.getItem("bud-e-tts-model") || "");
 
   // Add useEffect for loading settings
   useEffect(() => {
     const savedApiUrl = localStorage.getItem("bud-e-api-url");
     const savedApiKey = localStorage.getItem("bud-e-api-key");
     const savedModel = localStorage.getItem("bud-e-model");
+    const savedTtsUrl = localStorage.getItem("bud-e-tts-url");
+    const savedTtsKey = localStorage.getItem("bud-e-tts-key");
+    const savedTtsModel = localStorage.getItem("bud-e-tts-model");
     if (savedApiUrl) setApiUrl(savedApiUrl);
     if (savedApiKey) setApiKey(savedApiKey);
     if (savedModel) setApiModel(savedModel);
+    if (savedTtsUrl) setTtsUrl(savedTtsUrl);
+    if (savedTtsKey) setTtsKey(savedTtsKey);
+    if (savedTtsModel) setTtsModel(savedTtsModel);
   }, []);
 
-  const handleSaveSettings = (newApiUrl: string, newApiKey: string, newModel: string) => {
+  const handleSaveSettings = (newApiUrl: string, newApiKey: string, newModel: string, newTtsUrl: string, newTtsKey: string, newTtsModel: string) => {
     setApiUrl(newApiUrl);
     setApiKey(newApiKey);
     setApiModel(newModel);
+    setTtsUrl(newTtsUrl);
+    setTtsKey(newTtsKey);
+    setTtsModel(newTtsModel);
     localStorage.setItem("bud-e-api-url", newApiUrl);
     localStorage.setItem("bud-e-api-key", newApiKey);
     localStorage.setItem("bud-e-model", newModel);
+    localStorage.setItem("bud-e-tts-url", newTtsUrl);
+    localStorage.setItem("bud-e-tts-key", newTtsKey);
+    localStorage.setItem("bud-e-tts-model", newTtsModel);
     setShowSettings(false);
   };
 
@@ -957,6 +974,9 @@ export default function ChatIsland({ lang }: { lang: string }) {
           text: text,
           textPosition: sourceFunction,
           voice: lang === "en" ? "Stefanie" : "Florian",
+          ttsKey: ttsKey,
+          ttsUrl: ttsUrl,
+          ttsModel: ttsModel,
         }),
       });
 
@@ -1292,7 +1312,7 @@ export default function ChatIsland({ lang }: { lang: string }) {
         readAlways={readAlways}
         autoScroll={autoScroll}
         audioFileDict={audioFileDict}
-        currentEditIndex={currentEditIndex}
+        currentEditIndex={currentEditIndex!}
         onSpeakAtGroupIndexAction={handleOnSpeakAtGroupIndexAction}
         onToggleReadAlwaysAction={() => toggleReadAlways(!readAlways)}
         onToggleAutoScrollAction={() => toggleAutoScroll(!autoScroll)}
@@ -1308,6 +1328,9 @@ export default function ChatIsland({ lang }: { lang: string }) {
           apiUrl={apiUrl}
           apiKey={apiKey}
           apiModel={apiModel}
+          ttsUrl={ttsUrl}
+          ttsKey={ttsKey}
+          ttsModel={ttsModel}
           onSave={handleSaveSettings}
           onClose={() => setShowSettings(false)}
           lang={lang}

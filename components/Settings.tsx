@@ -5,6 +5,9 @@ export default function Settings({
   apiUrl, 
   apiKey,
   apiModel,
+  ttsUrl,
+  ttsKey,
+  ttsModel,
   onSave, 
   onClose,
   lang = 'en'
@@ -12,13 +15,19 @@ export default function Settings({
   apiUrl: string;
   apiKey: string;
   apiModel: string;
-  onSave: (apiUrl: string, apiKey: string, apiModel: string) => void;
+  ttsUrl: string;
+  ttsKey: string;
+  ttsModel: string;
+  onSave: (apiUrl: string, apiKey: string, apiModel: string, ttsUrl: string, ttsKey: string, ttsModel: string) => void;
   onClose: () => void;
   lang?: string;
 }) {
   const [newApiUrl, setNewApiUrl] = useState(apiUrl);
   const [newApiKey, setNewApiKey] = useState(apiKey);
   const [newModel, setNewModel] = useState(apiModel);
+  const [newTtsUrl, setNewTtsUrl] = useState(ttsUrl);
+  const [newTtsKey, setNewTtsKey] = useState(ttsKey);
+  const [newTtsModel, setNewTtsModel] = useState(ttsModel);
 
   return (
     <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -64,6 +73,45 @@ export default function Settings({
           />
         </div>
 
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {settingsContent[lang].ttsUrlLabel}
+          </label>
+          <input
+            type="text"
+            value={newTtsUrl}
+            onChange={(e) => setNewTtsUrl((e.target as HTMLInputElement).value)}
+            class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+            placeholder={settingsContent[lang].ttsUrlPlaceholder}
+          />
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {settingsContent[lang].ttsKeyLabel}
+          </label>
+          <input
+            type="password"
+            value={newTtsKey}
+            onChange={(e) => setNewTtsKey((e.target as HTMLInputElement).value)}
+            class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+            placeholder={settingsContent[lang].ttsKeyPlaceholder}
+          />
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {settingsContent[lang].ttsModelLabel}
+          </label>
+          <input
+            type="text"
+            value={newTtsModel}
+            onChange={(e) => setNewTtsModel((e.target as HTMLInputElement).value)}
+            class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+            placeholder={settingsContent[lang].ttsModelPlaceholder}
+          />
+        </div>
+
         <div class="flex justify-end space-x-4">
           <button
             onClick={onClose}
@@ -72,7 +120,7 @@ export default function Settings({
             {settingsContent[lang].cancel}
           </button>
           <button
-            onClick={() => onSave(newApiUrl, newApiKey, newModel)}
+            onClick={() => onSave(newApiUrl, newApiKey, newModel, newTtsUrl, newTtsKey, newTtsModel)}
             class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             {settingsContent[lang].save}
