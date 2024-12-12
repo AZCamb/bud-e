@@ -31,7 +31,7 @@ export default function Settings({
 
   return (
     <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+      <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full m-4">
         <h2 class="text-xl font-bold mb-4">{settingsContent[lang].title}</h2>
         
         <div class="mb-4">

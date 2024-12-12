@@ -1197,7 +1197,7 @@ export default function ChatIsland({ lang }: { lang: string }) {
   // MAIN CONTENT THAT IS RENDERED
   return (
     <div class="w-full">
-      <div class="flex items-center mb-4">
+      <div class="flex items-center mb-4 flex-wrap">
         {/* Add settings button next to existing chat buttons */}
         <button
           class="rounded-full bg-slate-200 px-4 py-2 mx-2 mb-2"
