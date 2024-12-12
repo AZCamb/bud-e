@@ -72,78 +72,63 @@ export default function ChatIsland({ lang }: { lang: string }) {
 
   const [showSettings, setShowSettings] = useState(false);
   
-  const [apiUrl, setApiUrl] = useState(localStorage.getItem("bud-e-api-url") || "");
-  const [apiKey, setApiKey] = useState(localStorage.getItem("bud-e-api-key") || "");
-  const [apiModel, setApiModel] = useState(localStorage.getItem("bud-e-model") || "");
-
-  const [ttsUrl, setTtsUrl] = useState(localStorage.getItem("bud-e-tts-url") || "");
-  const [ttsKey, setTtsKey] = useState(localStorage.getItem("bud-e-tts-key") || "");
-  const [ttsModel, setTtsModel] = useState(localStorage.getItem("bud-e-tts-model") || "");
-
-  const [systemPrompt, setSystemPrompt] = useState(localStorage.getItem("bud-e-system-prompt") || "");
-
-  const [sttUrl, setSttUrl] = useState(localStorage.getItem("bud-e-stt-url") || "");
-  const [sttKey, setSttKey] = useState(localStorage.getItem("bud-e-stt-key") || "");
-  const [sttModel, setSttModel] = useState(localStorage.getItem("bud-e-stt-model") || "");
+  const [settings, setSettings] = useState({
+    apiUrl: localStorage.getItem("bud-e-api-url") || "",
+    apiKey: localStorage.getItem("bud-e-api-key") || "",
+    apiModel: localStorage.getItem("bud-e-model") || "",
+    ttsUrl: localStorage.getItem("bud-e-tts-url") || "",
+    ttsKey: localStorage.getItem("bud-e-tts-key") || "",
+    ttsModel: localStorage.getItem("bud-e-tts-model") || "",
+    sttUrl: localStorage.getItem("bud-e-stt-url") || "",
+    sttKey: localStorage.getItem("bud-e-stt-key") || "",
+    sttModel: localStorage.getItem("bud-e-stt-model") || "",
+    systemPrompt: localStorage.getItem("bud-e-system-prompt") || "",
+    vlmUrl: localStorage.getItem("bud-e-vlm-url") || "",
+    vlmKey: localStorage.getItem("bud-e-vlm-key") || "",
+    vlmModel: localStorage.getItem("bud-e-vlm-model") || "",
+    vlmCorrectionModel: localStorage.getItem("bud-e-vlm-correction-model") || "",
+  });
 
   // Add useEffect for loading settings
   useEffect(() => {
-    const savedApiUrl = localStorage.getItem("bud-e-api-url");
-    const savedApiKey = localStorage.getItem("bud-e-api-key");
-    const savedModel = localStorage.getItem("bud-e-model");
-    const savedTtsUrl = localStorage.getItem("bud-e-tts-url");
-    const savedTtsKey = localStorage.getItem("bud-e-tts-key");
-    const savedTtsModel = localStorage.getItem("bud-e-tts-model");
-    const savedSttUrl = localStorage.getItem("bud-e-stt-url");
-    const savedSttKey = localStorage.getItem("bud-e-stt-key");
-    const savedSttModel = localStorage.getItem("bud-e-stt-model");
-    const savedSystemPrompt = localStorage.getItem("bud-e-system-prompt");
-    
-    if (savedApiUrl) setApiUrl(savedApiUrl);
-    if (savedApiKey) setApiKey(savedApiKey);
-    if (savedModel) setApiModel(savedModel);
-    if (savedTtsUrl) setTtsUrl(savedTtsUrl);
-    if (savedTtsKey) setTtsKey(savedTtsKey);
-    if (savedTtsModel) setTtsModel(savedTtsModel);
-    if (savedSttUrl) setSttUrl(savedSttUrl);
-    if (savedSttKey) setSttKey(savedSttKey);
-    if (savedSttModel) setSttModel(savedSttModel);
-    if (savedSystemPrompt) setSystemPrompt(savedSystemPrompt);
+    const savedSettings = {
+      apiUrl: localStorage.getItem("bud-e-api-url") || "",
+      apiKey: localStorage.getItem("bud-e-api-key") || "",
+      apiModel: localStorage.getItem("bud-e-model") || "",
+      ttsUrl: localStorage.getItem("bud-e-tts-url") || "",
+      ttsKey: localStorage.getItem("bud-e-tts-key") || "",
+      ttsModel: localStorage.getItem("bud-e-tts-model") || "",
+      sttUrl: localStorage.getItem("bud-e-stt-url") || "",
+      sttKey: localStorage.getItem("bud-e-stt-key") || "",
+      sttModel: localStorage.getItem("bud-e-stt-model") || "",
+      systemPrompt: localStorage.getItem("bud-e-system-prompt") || "",
+      vlmUrl: localStorage.getItem("bud-e-vlm-url") || "",
+      vlmKey: localStorage.getItem("bud-e-vlm-key") || "",
+      vlmModel: localStorage.getItem("bud-e-vlm-model") || "",
+      vlmCorrectionModel: localStorage.getItem("bud-e-vlm-correction-model") || "",
+    };
+    setSettings(savedSettings);
   }, []);
 
-  const handleSaveSettings = (
-    newApiUrl: string, 
-    newApiKey: string, 
-    newModel: string, 
-    newTtsUrl: string, 
-    newTtsKey: string, 
-    newTtsModel: string,
-    newSttUrl: string,
-    newSttKey: string,
-    newSttModel: string,
-    newSystemPrompt: string
-  ) => {
-    setApiUrl(newApiUrl);
-    setApiKey(newApiKey);
-    setApiModel(newModel);
-    setTtsUrl(newTtsUrl);
-    setTtsKey(newTtsKey);
-    setTtsModel(newTtsModel);
-    setSttUrl(newSttUrl);
-    setSttKey(newSttKey);
-    setSttModel(newSttModel);
-    setSystemPrompt(newSystemPrompt);
-    
-    localStorage.setItem("bud-e-api-url", newApiUrl);
-    localStorage.setItem("bud-e-api-key", newApiKey);
-    localStorage.setItem("bud-e-model", newModel);
-    localStorage.setItem("bud-e-tts-url", newTtsUrl);
-    localStorage.setItem("bud-e-tts-key", newTtsKey);
-    localStorage.setItem("bud-e-tts-model", newTtsModel);
-    localStorage.setItem("bud-e-stt-url", newSttUrl);
-    localStorage.setItem("bud-e-stt-key", newSttKey);
-    localStorage.setItem("bud-e-stt-model", newSttModel);
-    localStorage.setItem("bud-e-system-prompt", newSystemPrompt);
+  const handleSaveSettings = (newSettings: typeof settings) => {
+    setSettings(newSettings);
+    localStorage.setItem("bud-e-api-url", newSettings.apiUrl);
+    localStorage.setItem("bud-e-api-key", newSettings.apiKey);
+    localStorage.setItem("bud-e-model", newSettings.apiModel);
+    localStorage.setItem("bud-e-tts-url", newSettings.ttsUrl);
+    localStorage.setItem("bud-e-tts-key", newSettings.ttsKey);
+    localStorage.setItem("bud-e-tts-model", newSettings.ttsModel);
+    localStorage.setItem("bud-e-stt-url", newSettings.sttUrl);
+    localStorage.setItem("bud-e-stt-key", newSettings.sttKey);
+    localStorage.setItem("bud-e-stt-model", newSettings.sttModel);
+    localStorage.setItem("bud-e-system-prompt", newSettings.systemPrompt);
+    localStorage.setItem("bud-e-vlm-url", newSettings.vlmUrl);
+    localStorage.setItem("bud-e-vlm-key", newSettings.vlmKey);
+    localStorage.setItem("bud-e-vlm-model", newSettings.vlmModel);
+    localStorage.setItem(
+      "bud-e-vlm-correction-model",
+      newSettings.vlmCorrectionModel
+    );
     setShowSettings(false);
   };
 
@@ -821,10 +806,14 @@ export default function ChatIsland({ lang }: { lang: string }) {
         body: JSON.stringify({
           lang: lang,
           messages: newMessages,
-          llmApiUrl: apiUrl,
-          llmApiKey: apiKey,
-          llmApiModel: apiModel,
-          systemPrompt: systemPrompt
+          llmApiUrl: settings.apiUrl,
+          llmApiKey: settings.apiKey,
+          llmApiModel: settings.apiModel,
+          vlmApiUrl: settings.vlmUrl,
+          vlmApiKey: settings.vlmKey,
+          vlmApiModel: settings.vlmModel,
+          vlmCorrectionModel: settings.vlmCorrectionModel,
+          systemPrompt: settings.systemPrompt
         }),
         onmessage(ev: EventSourceMessage) {
           const parsedData = JSON.parse(ev.data);
@@ -1010,9 +999,9 @@ export default function ChatIsland({ lang }: { lang: string }) {
           text: text,
           textPosition: sourceFunction,
           voice: lang === "en" ? "Stefanie" : "Florian",
-          ttsKey: ttsKey,
-          ttsUrl: ttsUrl,
-          ttsModel: ttsModel,
+          ttsKey: settings.ttsKey,
+          ttsUrl: settings.ttsUrl,
+          ttsModel: settings.ttsModel,
         }),
       });
 
@@ -1361,16 +1350,7 @@ export default function ChatIsland({ lang }: { lang: string }) {
 
       {showSettings && (
         <Settings 
-          apiUrl={apiUrl}
-          apiKey={apiKey}
-          apiModel={apiModel}
-          ttsUrl={ttsUrl}
-          ttsKey={ttsKey}
-          ttsModel={ttsModel}
-          sttUrl={sttUrl}
-          sttKey={sttKey}
-          sttModel={sttModel}
-          systemPrompt={systemPrompt}
+          settings={settings}
           onSave={handleSaveSettings}
           onClose={() => setShowSettings(false)}
           lang={lang}
@@ -1403,9 +1383,9 @@ export default function ChatIsland({ lang }: { lang: string }) {
 
         <VoiceRecordButton
           resetTranscript={resetTranscript}
-          sttUrl={sttUrl}
-          sttKey={sttKey}
-          sttModel={sttModel}
+          sttUrl={settings.sttUrl}
+          sttKey={settings.sttKey}
+          sttModel={settings.sttModel}
           onFinishRecording={(finalTranscript) => {
             startStream(finalTranscript);
           }}

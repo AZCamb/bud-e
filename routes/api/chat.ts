@@ -6,24 +6,24 @@ import { chatContent } from "../../internalization/content.ts";
 // const API_URL = Deno.env.get("API_URL_TOGETHER") || "";
 // const API_KEY = Deno.env.get("API_KEY_TOGETHER") || "";
 // const API_MODEL = "MISTRALAI/MIXTRAL-8X22B-INSTRUCT-V0.1";
-const API_URL = Deno.env.get("API_URL") || "";
-const API_KEY = Deno.env.get("API_KEY") || "";
-const API_MODEL = Deno.env.get("API_MODEL") || "";
+const API_URL = Deno.env.get("LLM_URL") || "";
+const API_KEY = Deno.env.get("LLM_KEY") || "";
+const API_MODEL = Deno.env.get("LLM_MODEL") || "";
 
-const API_IMAGE_URL = Deno.env.get("API_IMAGE_URL") || "";
-const API_IMAGE_KEY = Deno.env.get("API_IMAGE_KEY") || "";
-const API_IMAGE_MODEL = Deno.env.get("API_IMAGE_MODEL") || "";
-const API_IMAGE_CORRECTION_MODEL = Deno.env.get("API_IMAGE_CORRECTION_MODEL") || "";
+const API_IMAGE_URL = Deno.env.get("VLM_URL") || "";
+const API_IMAGE_KEY = Deno.env.get("VLM_KEY") || "";
+const API_IMAGE_MODEL = Deno.env.get("VLM_MODEL") || "";
+const API_IMAGE_CORRECTION_MODEL = Deno.env.get("VLM_CORRECTION_MODEL") || "";
 
-const CURRENT_DATETIME = new Date().toISOString();
-console.log(CURRENT_DATETIME, API_MODEL);
+// const CURRENT_DATETIME = new Date().toISOString();
+// console.log(CURRENT_DATETIME, API_MODEL);
 
 interface Message {
   role: string;
   content: string;
 }
 
-async function getModelResponseStream(messages: Message[], lang: string, llmApiUrl: string, llmApiKey: string, llmApiModel: string, systemPrompt: string) {
+async function getModelResponseStream(messages: Message[], lang: string, llmApiUrl: string, llmApiKey: string, llmApiModel: string, systemPrompt: string, vlmApiUrl: string, vlmApiKey: string, vlmApiModel: string, vlmCorrectionModel: string) {
   let isLastMessageAssistant =
     messages[messages.length - 1].role === "assistant";
   while (isLastMessageAssistant) {
@@ -69,13 +69,13 @@ async function getModelResponseStream(messages: Message[], lang: string, llmApiU
   let api_model = llmApiModel != '' ? llmApiModel : API_MODEL;
 
   if (isImageInMessages) {
-    api_url = API_IMAGE_URL;
-    api_key = API_IMAGE_KEY;
-    api_model = API_IMAGE_MODEL;
+    api_url = vlmApiUrl != '' ? vlmApiUrl : API_IMAGE_URL;
+    api_key = vlmApiKey != '' ? vlmApiKey : API_IMAGE_KEY;
+    api_model = vlmApiModel != '' ? vlmApiModel : API_IMAGE_MODEL;
   }
 
   if (isCorrectionInLastMessage) {
-    api_model = API_IMAGE_CORRECTION_MODEL;
+    api_model = vlmCorrectionModel != '' ? vlmCorrectionModel : API_IMAGE_CORRECTION_MODEL;
   }
 
   const fetchOptions: RequestInit = {
@@ -221,6 +221,6 @@ export const handler: Handlers = {
 
     // console.log("Model used: ", API_MODEL);
     // console.log("payload messages", payload.messages);
-    return getModelResponseStream(payload.messages, payload.lang, payload.llmApiUrl, payload.llmApiKey, payload.llmApiModel, payload.systemPrompt);
+    return getModelResponseStream(payload.messages, payload.lang, payload.llmApiUrl, payload.llmApiKey, payload.llmApiModel, payload.systemPrompt, payload.vlmApiUrl, payload.vlmApiKey, payload.vlmApiModel, payload.vlmCorrectionModel);
   },
 };

@@ -1,59 +1,63 @@
 import { useState } from "preact/hooks";
 import { settingsContent, chatContent } from "../internalization/content.ts";
 
-export default function Settings({ 
-  apiUrl, 
-  apiKey,
-  apiModel,
-  ttsUrl,
-  ttsKey,
-  ttsModel,
-  sttUrl,        // new
-  sttKey,        // new
-  sttModel,      // new
-  systemPrompt,
-  onSave, 
+export default function Settings({
+  settings,
+  onSave,
   onClose,
   lang = 'en'
-}: { 
-  apiUrl: string;
-  apiKey: string;
-  apiModel: string;
-  ttsUrl: string;
-  ttsKey: string;
-  ttsModel: string;
-  sttUrl: string;    // new
-  sttKey: string;    // new
-  sttModel: string;  // new
-  systemPrompt: string;
-  onSave: (apiUrl: string, apiKey: string, apiModel: string, ttsUrl: string, ttsKey: string, ttsModel: string, sttUrl: string, sttKey: string, sttModel: string, systemPrompt: string) => void;
+}: {
+  settings: {
+    apiUrl: string;
+    apiKey: string;
+    apiModel: string;
+    ttsUrl: string;
+    ttsKey: string;
+    ttsModel: string;
+    sttUrl: string;
+    sttKey: string;
+    sttModel: string;
+    systemPrompt: string;
+    vlmUrl: string;
+    vlmKey: string;
+    vlmModel: string;
+    vlmCorrectionModel: string;
+  };
+  onSave: (newSettings: typeof settings) => void;
   onClose: () => void;
   lang?: string;
 }) {
-  const [newApiUrl, setNewApiUrl] = useState(apiUrl);
-  const [newApiKey, setNewApiKey] = useState(apiKey);
-  const [newModel, setNewModel] = useState(apiModel);
-  const [newTtsUrl, setNewTtsUrl] = useState(ttsUrl);
-  const [newTtsKey, setNewTtsKey] = useState(ttsKey);
-  const [newTtsModel, setNewTtsModel] = useState(ttsModel);
-  const [newSttUrl, setNewSttUrl] = useState(sttUrl);       // new
-  const [newSttKey, setNewSttKey] = useState(sttKey);       // new
-  const [newSttModel, setNewSttModel] = useState(sttModel); // new
-  const [newSystemPrompt, setNewSystemPrompt] = useState(systemPrompt || chatContent[lang].systemPrompt);
+  const [newSettings, setNewSettings] = useState({ ...settings });
 
   return (
     <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full m-4 overflow-y-scroll max-h-[90dvh]">
         <h2 class="text-xl font-bold mb-4">{settingsContent[lang].title}</h2>
-        
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {settingsContent[lang].systemPromptLabel}
+          </label>
+          <textarea
+            value={newSettings.systemPrompt}
+            placeholder={chatContent[lang].systemPrompt}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, systemPrompt: (e.target as HTMLTextAreaElement).value })
+            }
+            class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 h-32"
+          />
+        </div>
+
         <div class="mb-4">
           <label class="block text-sm font-medium text-gray-700 mb-2">
             {settingsContent[lang].apiUrlLabel}
           </label>
           <input
             type="text"
-            value={newApiUrl}
-            onChange={(e) => setNewApiUrl((e.target as HTMLInputElement).value)}
+            value={newSettings.apiUrl}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, apiUrl: (e.target as HTMLInputElement).value })
+            }
             class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
             placeholder={settingsContent[lang].apiUrlPlaceholder}
           />
@@ -65,8 +69,10 @@ export default function Settings({
           </label>
           <input
             type="password"
-            value={newApiKey}
-            onChange={(e) => setNewApiKey((e.target as HTMLInputElement).value)}
+            value={newSettings.apiKey}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, apiKey: (e.target as HTMLInputElement).value })
+            }
             class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
             placeholder={settingsContent[lang].apiKeyPlaceholder}
           />
@@ -78,8 +84,10 @@ export default function Settings({
           </label>
           <input
             type="text"
-            value={newModel}
-            onChange={(e) => setNewModel((e.target as HTMLInputElement).value)}
+            value={newSettings.apiModel}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, apiModel: (e.target as HTMLInputElement).value })
+            }
             class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
             placeholder={settingsContent[lang].modelPlaceholder}
           />
@@ -91,8 +99,10 @@ export default function Settings({
           </label>
           <input
             type="text"
-            value={newTtsUrl}
-            onChange={(e) => setNewTtsUrl((e.target as HTMLInputElement).value)}
+            value={newSettings.ttsUrl}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, ttsUrl: (e.target as HTMLInputElement).value })
+            }
             class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
             placeholder={settingsContent[lang].ttsUrlPlaceholder}
           />
@@ -104,8 +114,10 @@ export default function Settings({
           </label>
           <input
             type="password"
-            value={newTtsKey}
-            onChange={(e) => setNewTtsKey((e.target as HTMLInputElement).value)}
+            value={newSettings.ttsKey}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, ttsKey: (e.target as HTMLInputElement).value })
+            }
             class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
             placeholder={settingsContent[lang].ttsKeyPlaceholder}
           />
@@ -117,8 +129,10 @@ export default function Settings({
           </label>
           <input
             type="text"
-            value={newTtsModel}
-            onChange={(e) => setNewTtsModel((e.target as HTMLInputElement).value)}
+            value={newSettings.ttsModel}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, ttsModel: (e.target as HTMLInputElement).value })
+            }
             class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
             placeholder={settingsContent[lang].ttsModelPlaceholder}
           />
@@ -130,8 +144,10 @@ export default function Settings({
           </label>
           <input
             type="text"
-            value={newSttUrl}
-            onChange={(e) => setNewSttUrl((e.target as HTMLInputElement).value)}
+            value={newSettings.sttUrl}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, sttUrl: (e.target as HTMLInputElement).value })
+            }
             class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
             placeholder={settingsContent[lang].sttUrlPlaceholder}
           />
@@ -143,8 +159,10 @@ export default function Settings({
           </label>
           <input
             type="password"
-            value={newSttKey}
-            onChange={(e) => setNewSttKey((e.target as HTMLInputElement).value)}
+            value={newSettings.sttKey}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, sttKey: (e.target as HTMLInputElement).value })
+            }
             class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
             placeholder={settingsContent[lang].sttKeyPlaceholder}
           />
@@ -156,8 +174,10 @@ export default function Settings({
           </label>
           <input
             type="text"
-            value={newSttModel}
-            onChange={(e) => setNewSttModel((e.target as HTMLInputElement).value)}
+            value={newSettings.sttModel}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, sttModel: (e.target as HTMLInputElement).value })
+            }
             class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
             placeholder={settingsContent[lang].sttModelPlaceholder}
           />
@@ -165,12 +185,61 @@ export default function Settings({
 
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-700 mb-2">
-            {settingsContent[lang].systemPromptLabel}
+            {settingsContent[lang].vlmUrlLabel}
           </label>
-          <textarea
-            value={newSystemPrompt}
-            onChange={(e) => setNewSystemPrompt((e.target as HTMLTextAreaElement).value)}
-            class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 h-32"
+          <input
+            type="text"
+            value={newSettings.vlmUrl}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, vlmUrl: (e.target as HTMLInputElement).value })
+            }
+            class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+            placeholder={settingsContent[lang].vlmUrlPlaceholder}
+          />
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {settingsContent[lang].vlmKeyLabel}
+          </label>
+          <input
+            type="password"
+            value={newSettings.vlmKey}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, vlmKey: (e.target as HTMLInputElement).value })
+            }
+            class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+            placeholder={settingsContent[lang].vlmKeyPlaceholder}
+          />
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {settingsContent[lang].vlmModelLabel}
+          </label>
+          <input
+            type="text"
+            value={newSettings.vlmModel}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, vlmModel: (e.target as HTMLInputElement).value })
+            }
+            class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+            placeholder={settingsContent[lang].vlmModelPlaceholder}
+          />
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {settingsContent[lang].vlmCorrectionModelLabel}
+          </label>
+          <input
+            type="text"
+            value={newSettings.vlmCorrectionModel}
+            onChange={(e) =>
+              setNewSettings({ ...newSettings, vlmCorrectionModel: (e.target as HTMLInputElement).value })
+            }
+            class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+            placeholder={settingsContent[lang].vlmCorrectionModelPlaceholder}
           />
         </div>
 
@@ -182,7 +251,7 @@ export default function Settings({
             {settingsContent[lang].cancel}
           </button>
           <button
-            onClick={() => onSave(newApiUrl, newApiKey, newModel, newTtsUrl, newTtsKey, newTtsModel, newSttUrl, newSttKey, newSttModel, newSystemPrompt)}
+            onClick={() => onSave(newSettings)}
             class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             {settingsContent[lang].save}
