@@ -47,30 +47,28 @@ async function callMARS6API(
   }
 
   async function pollTTSTask(ttsUrl: string, ttsKey: string, taskID: string) {
-    while (true) {
-      try {
-        const response = await fetch(`${ttsUrl}/tts/${taskID}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-header": ttsKey,
-          },
-        });
+    const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+    try {
+      const response = await fetch(`${ttsUrl}/tts/${taskID}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-header": ttsKey,
+        },
+      });
 
-        const responseJSON = await response.json();
-        const status = responseJSON.status;
-        console.log(`Polling: ${status}`);
+      const responseJSON = await response.json();
+      const status = responseJSON.status;
+      console.log(`Polling: ${status}`);
 
-        if (status === "SUCCESS") {
-          return responseJSON.run_id;
-        }
-      } catch (error) {
-        console.error("Error polling TTS task:", error);
-        throw error;
+      if (status === "SUCCESS") {
+        return responseJSON.run_id;
       }
-
-      // Wait for 1.5 seconds before polling again
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await delay(1500); // Wait for 1.5 seconds before the next poll.
+      return pollTTSTask(ttsUrl, ttsKey, taskID); // Recursive call for polling.
+    } catch (error) {
+      console.error("Error polling TTS task:", error);
+      throw error;
     }
   }
 
@@ -133,52 +131,56 @@ async function textToSpeech(
   console.log("ttsKey", ttsKey);
   console.log("ttsModel", ttsModel);
 
-  const useThisTttsUrl = ttsUrl != '' ? ttsUrl : TTS_URL;
-  const useThisTtsKey = ttsKey != '' ? ttsKey : TTS_KEY;
-  const useThisTtsModel = ttsModel != '' ? ttsModel : TTS_MODEL;
+  const useThisTttsUrl = ttsUrl != "" ? ttsUrl : TTS_URL;
+  const useThisTtsKey = ttsKey != "" ? ttsKey : TTS_KEY;
+  const useThisTtsModel = ttsModel != "" ? ttsModel : TTS_MODEL;
 
   try {
-    if (ttsModel !== "MARS6") {
-      const startTime = Date.now();
-      const response = await fetch(useThisTttsUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${useThisTtsKey}`,
-        },
-        body: JSON.stringify({
-          text: text,
-          normalize: true,
-          format: "mp3",
-          reference_id: useThisTtsModel,
-          mp3_bitrate: 64,
-          opus_bitrate: -1000,
-          latency: "normal",
-        }),
-      });
-
-      if (response.ok) {
-        const audioData = await response.arrayBuffer();
-        console.log(
-          `Audio file received for ${textPosition}, Latency:`,
-          Date.now() - startTime,
+    switch (useThisTtsKey) {
+      case "MARS6": {
+        const audioData = await callMARS6API(
+          text,
+          ttsUrl,
+          ttsKey,
         );
-        return Buffer.from(audioData);
-      } else {
-        console.error(
-          `Failed to synthesize speech. Status code: ${response.status}: ${response.statusText}`,
-        );
+        if (audioData) {
+          return Buffer.from(audioData);
+        } else {
+          console.error(`Failed to synthesize speech.`);
+          break;
+        }
       }
-    } else {
-      const audioData = await callMARS6API(
-        text,
-        ttsUrl,
-        ttsKey,
-      );
-      if (audioData) {
-        return Buffer.from(audioData);
-      } else {
-        console.error(`Failed to synthesize speech.`);
+      default: {
+        const startTime = Date.now();
+        const response = await fetch(useThisTttsUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${useThisTtsKey}`,
+          },
+          body: JSON.stringify({
+            text: text,
+            normalize: true,
+            format: "mp3",
+            reference_id: useThisTtsModel,
+            mp3_bitrate: 64,
+            opus_bitrate: -1000,
+            latency: "normal",
+          }),
+        });
+
+        if (response.ok) {
+          const audioData = await response.arrayBuffer();
+          console.log(
+            `Audio file received for ${textPosition}, Latency:`,
+            Date.now() - startTime,
+          );
+          return Buffer.from(audioData);
+        } else {
+          console.error(
+            `Failed to synthesize speech. Status code: ${response.status}: ${response.statusText}`,
+          );
+        }
       }
     }
   } catch (error) {
@@ -196,7 +198,13 @@ export const handler: Handlers = {
       return new Response("No text provided", { status: 400 });
     }
 
-    const audioData = await textToSpeech(text, textPosition, ttsUrl, ttsKey, ttsModel);
+    const audioData = await textToSpeech(
+      text,
+      textPosition,
+      ttsUrl,
+      ttsKey,
+      ttsModel,
+    );
 
     if (audioData) {
       const response = new Response(audioData, {
