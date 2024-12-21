@@ -57,7 +57,7 @@ export default function ChatIsland({ lang }: { lang: string }) {
 
   // General settings
   const [readAlways, setReadAlways] = useState(false);
-  const [autoScroll, setAutoScroll] = useState(true);
+  const [autoScroll, setAutoScroll] = useState(false);
   const [images, setImages] = useState([] as Image[]);
   const [isStreamComplete, setIsStreamComplete] = useState(true);
   const [stopList, setStopList] = useState([] as number[]);
@@ -399,7 +399,7 @@ export default function ChatIsland({ lang }: { lang: string }) {
     // setMessages((prevMessages) => prevMessages.slice(0, groupIndex));
     setQuery(contentToEdit);
     setStopList([]);
-    setCurrentEditIndex(groupIndex);
+    setCurrentEditIndex(groupIndex, u);
 
     const textarea = document.querySelector("textarea");
     textarea!.focus();
