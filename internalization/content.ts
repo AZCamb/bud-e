@@ -9,6 +9,27 @@ export const headerContent: InternalizationContent = {
   },
 };
 
+export const agreementContent: InternalizationContent = {
+  en: {
+    title: "Welcome to Bud-E!",
+    content:
+      "Please read and accept the following terms and conditions to continue using Bud-E.",
+    termsAndConditionsTitle: "Terms and Conditions",
+    temsAndConditionsContent: "Placeholder Terms and Conditions",
+    agree: "I agree to the terms and conditions",
+    accept: "Accept",
+  },
+  de: {
+    title: "Willkommen bei Bud-E!",
+    content:
+      "Bitte lesen und akzeptieren Sie die folgenden Nutzungsbedingungen, um mit der Nutzung von Bud-E fortzufahren.",
+    termsAndConditionsTitle: "Nutzungsbedingungen",
+    temsAndConditionsContent: "Platzhalter Nutzungsbedingungen",
+    agree: "Ich stimme den Nutzungsbedingungen zu",
+    accept: "Akzeptieren",
+  },
+};
+
 export const menuContent: InternalizationContent = {
   en: {
     about: "About Bud-E",
@@ -58,6 +79,7 @@ export const chatIslandContent: InternalizationContent = {
     papersDate: "Date",
     result: "Result",
     of: "of",
+    noSettings: "⚠️ The minimum requirement to run the chat is missing. You need to open the settings and either provide an Universal API key or a custom API key with the corresponding url and model. ⚠️",
   },
   de: {
     welcomeMessage:
@@ -79,6 +101,7 @@ export const chatIslandContent: InternalizationContent = {
     papersDate: "Datum",
     result: "Ergebnis",
     of: "von",
+    noSettings: "⚠️ Die Mindestanforderung zum Ausführen des Chats fehlt. Du musst die Einstellungen öffnen und entweder einen Universal-API-Schlüssel oder einen benutzerdefinierten API-Schlüssel mit der entsprechender URL und dem Modell eintragen. ⚠️",
   },
 };
 
@@ -209,6 +232,15 @@ export const settingsContent: InternalizationContent = {
     cancel: "Cancel",
     save: "Save",
     systemPromptLabel: "System Prompt",
+    back: "Back",
+    universalApiKeyLabel: "Universal API Key",
+    universalApiKeyPlaceholder: "Enter your API key",
+    advancedSettings: "Advanced Settings",
+    lessSettings: "Less Settings",
+    chatApiTitle: "Chat API",
+    ttsTitle: "Text-to-Speech",
+    sttTitle: "Speech-to-Text",
+    vlmTitle: "Vision Language Model"
   },
   de: {
     title: "Einstellungen",
@@ -240,6 +272,15 @@ export const settingsContent: InternalizationContent = {
     vlmCorrectionModelPlaceholder: "VLM Korrektur Modellname eingeben",
     cancel: "Abbrechen",
     save: "Speichern",
-    systemPromptLabel: "System Prompt"
-  }
+    systemPromptLabel: "System Prompt",
+    back: "Zurück",
+    universalApiKeyLabel: "Universal API-Schlüssel",
+    universalApiKeyPlaceholder: "Geben Sie Ihren API-Schlüssel ein",
+    advancedSettings: "Erweiterte Einstellungen",
+    lessSettings: "Weniger Einstellungen",
+    chatApiTitle: "Chat API",
+    ttsTitle: "Text-zu-Sprache",
+    sttTitle: "Sprache-zu-Text",
+    vlmTitle: "Bildverarbeitung"
+  },
 };
