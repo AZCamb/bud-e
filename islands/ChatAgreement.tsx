@@ -10,7 +10,7 @@ export default function ChatAgreement({ lang }: ChatAgreementProps) {
   const [agreed, setAgreed] = useState(false);
 
   const handleAgree = () => {
-    localStorage.setItem("school-bud-e-agreement", "true");
+    localStorage.setItem("bud-e-agreement", "true");
     globalThis.location.reload();
   };
 
@@ -30,8 +30,10 @@ export default function ChatAgreement({ lang }: ChatAgreementProps) {
                 {agreementContent[lang].terms}
             </a>
         </p>
-        <h3 class="text-lg font-bold mb-4">{agreementContent[lang].termsAndConditionsTitle}</h3>
-        <p class="mb-4">{agreementContent[lang].temsAndConditionsContent}</p>
+        <p 
+          class="mb-4"
+          dangerouslySetInnerHTML={{ __html: agreementContent[lang].temsAndConditionsContent }}
+        />
       <div class="mb-4">
         <label class="flex items-center">
           <input

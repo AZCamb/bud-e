@@ -1,3 +1,5 @@
+import { agreementContentRaw } from "./agreement-content.ts";
+
 export const headerContent: InternalizationContent = {
   en: {
     overTitle: "Experimental",
@@ -9,26 +11,7 @@ export const headerContent: InternalizationContent = {
   },
 };
 
-export const agreementContent: InternalizationContent = {
-  en: {
-    title: "Welcome to Bud-E!",
-    content:
-      "Please read and accept the following terms and conditions to continue using Bud-E.",
-    termsAndConditionsTitle: "Terms and Conditions",
-    temsAndConditionsContent: "Placeholder Terms and Conditions",
-    agree: "I agree to the terms and conditions",
-    accept: "Accept",
-  },
-  de: {
-    title: "Willkommen bei Bud-E!",
-    content:
-      "Bitte lesen und akzeptieren Sie die folgenden Nutzungsbedingungen, um mit der Nutzung von Bud-E fortzufahren.",
-    termsAndConditionsTitle: "Nutzungsbedingungen",
-    temsAndConditionsContent: "Platzhalter Nutzungsbedingungen",
-    agree: "Ich stimme den Nutzungsbedingungen zu",
-    accept: "Akzeptieren",
-  },
-};
+export const agreementContent: InternalizationContent = agreementContentRaw;
 
 export const menuContent: InternalizationContent = {
   en: {
