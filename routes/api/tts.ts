@@ -53,7 +53,7 @@ async function callMARS6API(
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "x-api-header": ttsKey,
+          "x-api-key": ttsKey,
         },
       });
 
@@ -104,7 +104,7 @@ async function callMARS6API(
       ttsUrl,
       ttsKey,
     );
-    const runID = await pollTTSTask(ttsKey, ttsKey, taskID);
+    const runID = await pollTTSTask(ttsUrl, ttsKey, taskID);
     return await getTTSAudioResult(ttsUrl, ttsKey, runID);
   } catch (error) {
     console.error(`Failed to call MARS6: ${error}`);
@@ -136,7 +136,7 @@ async function textToSpeech(
   const useThisTtsModel = ttsModel != "" ? ttsModel : TTS_MODEL;
 
   try {
-    switch (useThisTtsKey) {
+    switch (useThisTtsModel) {
       case "MARS6": {
         const audioData = await callMARS6API(
           text,
