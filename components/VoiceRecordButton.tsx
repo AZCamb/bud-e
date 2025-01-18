@@ -9,9 +9,9 @@ import { IS_BROWSER } from "$fresh/runtime.ts";
  * @param {Function} props.onFinishRecording - Callback function called when recording is finished. It receives the transcript as a parameter.
  * @param {Function} props.onInterimTranscript - Callback function called when interim transcript is available. It receives the interim transcript as a parameter.
  * @param {number} props.resetTranscript - A number used to trigger a reset of the transcript.
- * @param {string} props.sttUrl - The URL for the STT service.
- * @param {string} props.sttKey - The API key for the STT service.
- * @param {string} props.sttModel - The model to be used for the STT service.
+ * @param {string} props.sttUrl - The URL for the speech-to-text service.
+ * @param {string} props.sttKey - The API key for the speech-to-text service.
+ * @param {string} props.sttModel - The model to use for speech-to-text conversion.
  * @returns {JSX.Element} The VoiceRecordButton component.
  */
 function VoiceRecordButton({
@@ -20,7 +20,7 @@ function VoiceRecordButton({
   resetTranscript,
   sttUrl,
   sttKey,
-  sttModel
+  sttModel,
 }: {
   onFinishRecording: (transcript: string) => void;
   onInterimTranscript: (transcript: string) => void;
@@ -98,6 +98,12 @@ function VoiceRecordButton({
   const sendAudioToServer = async (audioBlob: Blob) => {
     const formData = new FormData();
     formData.append("audio", audioBlob, "recording.wav");
+
+    if (sttKey.startsWith("gsk_")) {
+      sttUrl = sttUrl == "" ? "https://api.groq.com/openai/v1/audio/transcriptions" : sttUrl;
+      sttModel = sttModel == "" ? "whisper-large-v3-turbo" : sttModel;
+    }
+
     formData.append("sttUrl", sttUrl);
     formData.append("sttKey", sttKey);
     formData.append("sttModel", sttModel);
