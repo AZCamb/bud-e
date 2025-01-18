@@ -188,7 +188,7 @@ export default function Settings({
           <label class="block text-sm font-medium text-gray-700 mb-2">
             📢 {settingsContent[lang].systemPromptLabel}
           </label>
-          <input
+          <textarea
             type="text"
             value={newSettings.systemPrompt}
             onChange={(e) =>
@@ -198,7 +198,7 @@ export default function Settings({
               )}
             class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
             placeholder={settingsContent[lang].systemPromptPlaceholder}
-          />
+          ></textarea>
         </div>
 
         {/* Advanced Settings Toggle Button */}
